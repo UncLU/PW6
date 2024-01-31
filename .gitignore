@@ -7,4 +7,6 @@ modules/instance/sa.json
 *.txt
 virtualenv/
 vvv/
-terraform/key
+terraform/key*
+terraform/.git
+
