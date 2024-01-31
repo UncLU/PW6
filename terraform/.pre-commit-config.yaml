@@ -1,0 +1,34 @@
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.86.0
+    hooks:
+      - id: terraform_fmt
+        args:
+          - --args=-no-color
+          - --args=-diff
+          - --args=-write=false
+      - id: terraform_validate
+        args:
+          - --tf-init-args=-upgrade
+            #        - --tf-init-args=-lockfile=readonly
+
+      - id: terraform_docs
+        args:
+          # Valid UNIX path. I.e. ../TFDOC.md or docs/README.md etc.
+          - --hook-config=--path-to-file=README.md
+          # Boolean. true or false
+          - --hook-config=--add-to-existing-file=true
+            # Boolean. true or false
+          - --hook-config=--create-file-if-not-exist=true
+            # Boolean. true or false
+          - --hook-config=--use-standard-markers=true
+            # Boolean. Defaults in v1.x to false. Set to true for compatibility with terraform-docs
+
+      - id: terraform_tflint
+        args:
+          - --args=--module
+          - --args=--enable-rule=terraform_documented_variables
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml

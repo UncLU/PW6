@@ -1,0 +1,8 @@
+key.json
+sa.json
+modules/instance/sa.json
+.git/
+.terraform.lock.hcl
+.terraform
+*.txt
+virtualenv/

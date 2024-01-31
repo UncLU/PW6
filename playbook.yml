@@ -1,0 +1,35 @@
+# playbook.yml
+---
+- name: Install Docker and PostgreSQL
+  hosts: all
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Install Docker on app group
+      when: "'app' in group_names"
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Start Docker service on app group
+      when: "'app' in group_names"
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install PostgreSQL on database group
+      when: "'database' in group_names"
+      apt:
+        name: postgresql-{{ postgresql_version }}
+        state: present
+
+    - name: Start PostgreSQL service on database group
+      when: "'database' in group_names"
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+      vars:
+        postgresql_version: "{{ postgresql_version }}"
+        postgresql_data_dir: "{{ postgresql_data_dir }}"
